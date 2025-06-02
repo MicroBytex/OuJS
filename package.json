@@ -2,6 +2,7 @@
   "name": "the-meme-api-oujs",
   "version": "1.0.0",
   "description": "Una API simple para servir URLs de imágenes aleatorias.",
+  "private": false,
   "main": "api/index.js",
   "scripts": {
     "start": "node api/index.js"

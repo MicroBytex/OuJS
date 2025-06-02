@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
+    const cors = require('cors');
 
-// Helper para generar IDs cortos (puedes mejorarlo si necesitas IDs más robustos)
 const generateId = () => Math.random().toString(36).slice(2, 9);
 
-// ¡IMPORTANTE! Actualiza width y height con los valores correctos para cada imagen.
 const imagesData = [
   { id: generateId(), url: "https://i.redd.it/b45dxk0xvq8d1.png", width: null, height: null },
   { id: generateId(), url: "https://statics.memondo.com/p/99/ccs/2025/05/CC_2818345_b3c7daa776a443eda8d67aa8f0354763_meme_otros_soy_un_incomprendido_1.jpg", width: null, height: null },
@@ -60,6 +59,8 @@ const imagesData = [
   { id: generateId(), url: "https://images7.memedroid.com/images/UPLOADED414/683cb02fb4bcf.webp", width: null, height: null },
 ];
 
+    app.use(cors());
+    
 app.get('/api/imagen-aleatoria', (req, res) => {
   if (!imagesData || imagesData.length === 0) {
     return res.status(500).json({ error: "No hay imágenes configuradas en el servidor." });
@@ -68,15 +69,11 @@ app.get('/api/imagen-aleatoria', (req, res) => {
   const randomIndex = Math.floor(Math.random() * imagesData.length);
   const randomImageObject = imagesData[randomIndex];
 
-  // Devolver el objeto de la imagen dentro de un array, como solicitaste
   res.json([randomImageObject]);
 });
 
-// Ruta raíz para verificar que la API funciona (opcional)
 app.get('/', (req, res) => {
   res.send('¡API de imágenes funcionando! Prueba el endpoint /api/imagen-aleatoria');
 });
 
-// Vercel maneja el servidor, así que no necesitas app.listen() aquí para producción.
-// Solo exporta la app.
 module.exports = app;
